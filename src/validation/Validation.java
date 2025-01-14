@@ -220,7 +220,7 @@ public class Validation {
             if (isValidDouble(input)) {
                 return Double.parseDouble(input);
             } else {
-                System.err.println("Please enter a real number.");
+                System.out.println(MAUDO + "Please enter a real number.");
             }
         }
     }
