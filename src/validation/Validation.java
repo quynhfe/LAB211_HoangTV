@@ -178,17 +178,17 @@ public class Validation {
             }
         }
     }
-    
+
     ////FLOAT FLOAT FLOAT FLOAT FLOAT ////////////
-    public  boolean isValidFloat(String input) {
+    public boolean isValidFloat(String input) {
         try {
-            Float.parseFloat(input); 
-            return true;  
+            Float.parseFloat(input);
+            return true;
         } catch (NumberFormatException e) {
-            return false; 
+            return false;
         }
     }
-    
+
     public float getValidFloat(String msg) {
         String input;
         while (true) {
@@ -201,17 +201,18 @@ public class Validation {
             }
         }
     }
+
     /// DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE//////
-     public  boolean isValidDouble(String input) {
+    public boolean isValidDouble(String input) {
         try {
-            Double.parseDouble(input); 
-            return true;  
+            Double.parseDouble(input);
+            return true;
         } catch (NumberFormatException e) {
-            return false;  
+            return false;
         }
     }
-     
-      public double getValidDouble(String msg) {
+
+    public double getValidDouble(String msg) {
         String input;
         while (true) {
             System.out.println(msg);
@@ -223,8 +224,9 @@ public class Validation {
             }
         }
     }
- //// Even, Odd, Perfect number ////////
-    public  boolean isEven(double number) {
+    //// Even, Odd, Perfect number ////////
+
+    public boolean isEven(double number) {
         return number % 2 == 0;
     }
 
@@ -233,8 +235,29 @@ public class Validation {
     }
 
     public boolean isPerfectSquare(double number) {
-        if (number < 0) return false;
+        if (number < 0) {
+            return false;
+        }
         int sqrt = (int) Math.sqrt(number);
         return (sqrt * sqrt) == number;
+    }
+
+    /////////Operator//////////
+    public boolean isOperator(String input) {
+        input = input.trim();
+        return input.equals("+") || input.equals("-") || input.equals("*") || input.equals("/") || input.equals("^")|| input.equals("=");
+    }
+
+    public String getValidOperator(String msg) {
+        String input;
+        while (true) {
+            System.out.println(msg);
+            input = sc.nextLine();
+            if (isOperator(input)) {
+                return input.trim();
+            } else {
+                System.err.println("Please input (+, -, *, /, ^)");
+            }
+        }
     }
 }

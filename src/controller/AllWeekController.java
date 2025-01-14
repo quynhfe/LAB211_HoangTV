@@ -13,6 +13,7 @@ import validation.Validation;
 public class AllWeekController {
     Validation validation = new Validation();
     Week_1_Controller week1 = new Week_1_Controller();
+    Week2_controller week2 = new Week2_controller();
     
     public void menu() {
         String[] menu = new String[]{
@@ -34,6 +35,7 @@ public class AllWeekController {
                     break;
                 }
                 case 2:{
+                    week2.menu();
                     break;
                 }
                 case 3:{
