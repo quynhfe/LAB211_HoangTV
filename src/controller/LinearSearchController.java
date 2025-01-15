@@ -22,8 +22,8 @@ public class LinearSearchController {
                 + validation.MAUXANHBIEN + " | |   | | '_ \\ / _ \\/ _` | '__| / __|/ _ \\/ _` | '__/ __| '_ \\ \n"
                 + validation.MAUXANHBIEN + " | |___| | | | |  __/ (_| | |    \\__ \\  __/ (_| | | | (__| | | |\n"
                 + validation.MAUXANHBIEN + " |_____|_|_| |_|\\___|\\__,_|_|    |___/\\___|\\__,_|_|  \\___|_| |_|\n"
-                + "                                                                ");
-        System.out.println(validation.MAUXANHLA + "LINEAR SEARCH" + validation.RESET);
+                + "                                                                "+ validation.RESET);
+//        System.out.println(validation.MAUXANHLA + "LINEAR SEARCH" + validation.RESET);
         int number = validation.getValidPositiveInt("Enter number of array:");
         int value = validation.getValidInt("Enter search value:");
         linearSearch.addValue(number);

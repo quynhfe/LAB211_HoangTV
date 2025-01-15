@@ -43,6 +43,10 @@ public class Validation {
         return getIntLimit("Your choice: ", 1, options.length);
     }
 
+    public void printChoice(String[] options, int choice) {
+        System.out.println("-----" + options[choice - 1] + "-----");
+    }
+
     public void printAWordWithLength(String word, int length) {
         for (int i = 0; i < length; i++) {
             System.out.print(word);
@@ -197,7 +201,7 @@ public class Validation {
             if (isValidFloat(input)) {
                 return Float.parseFloat(input);
             } else {
-                System.err.println("Please enter a real number.");
+                System.out.println(MAUDO + "Please enter a real number.");
             }
         }
     }
@@ -224,6 +228,19 @@ public class Validation {
             }
         }
     }
+
+    public double getValidDoubleGreaterThan(String msg, double numberGreaterThan) {
+        String input;
+        while (true) {
+            System.out.println(msg);
+            input = sc.nextLine();
+            if (isValidDouble(input) && (Double.parseDouble(input) > numberGreaterThan)) {
+                return Double.parseDouble(input);
+            } else {
+                System.out.println(MAUDO + "Please enter a real number > " + numberGreaterThan);
+            }
+        }
+    }
     //// Even, Odd, Perfect number ////////
 
     public boolean isEven(double number) {
@@ -245,7 +262,7 @@ public class Validation {
     /////////Operator//////////
     public boolean isOperator(String input) {
         input = input.trim();
-        return input.equals("+") || input.equals("-") || input.equals("*") || input.equals("/") || input.equals("^")|| input.equals("=");
+        return input.equals("+") || input.equals("-") || input.equals("*") || input.equals("/") || input.equals("^") || input.equals("=");
     }
 
     public String getValidOperator(String msg) {
@@ -260,4 +277,27 @@ public class Validation {
             }
         }
     }
+
+    ///////Shape shape shape shape ///////
+    public boolean isValidRadius(String input) {
+        return isValidDouble(input) && (Double.parseDouble(input) > 0);
+    }
+
+    public double getValidRadius(String msg) {
+        String input;
+        while (true) {
+            System.out.println(msg);
+            input = sc.nextLine();
+            if (isValidRadius(input)) {
+                return Double.parseDouble(input);
+            } else {
+                System.err.println("Please input a real number > 0");
+            }
+        }
+    }
+
+    public boolean isValidSideTriangle(Double a, Double b, Double c) {
+        return a + b > c && a + c > b && b + c > a;
+    }
+
 }

@@ -14,7 +14,9 @@ public class Week2_controller {
 
     Validation validation = new Validation();
     ComputerProgramController computerProgramController = new ComputerProgramController();
-
+    ShapeController shapeController = new ShapeController();
+    MatrixController matrixController = new MatrixController();
+    
     public void menu() {
         //alligator2, text to ascii web thu 2
         System.out.println(validation.MAUHONG + ":::       ::: :::::::::: :::::::::: :::    :::      :::::::: \n"
@@ -26,10 +28,9 @@ public class Week2_controller {
                 + validation.MAUHONG + "  ###   ###   ########## ########## ###    ###     ##########" + validation.RESET);
 
         String[] menu = new String[]{
-            "Develop a computer program.",
-            //            "Linear search",
-            //            "Change base number system (16, 10, 2) program",
-            //            "Solving the equation, find the square numbers, even numbers, odd numbers",
+            "Computer program.",
+            "Calculate perimeter and area of shape",
+            "Matrix",
             "Return main menu"
         };
         int len = menu.length;
@@ -42,9 +43,11 @@ public class Week2_controller {
                     break;
                 }
                 case 2: {
+                    shapeController.display();
                     break;
                 }
                 case 3: {
+                    matrixController.display();
                     break;
                 }
                 case 4: {
