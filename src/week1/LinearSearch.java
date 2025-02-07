@@ -25,7 +25,7 @@ public class LinearSearch {
          if (number > 0) {
             array = new int[number];
             for (int i = 0; i < number; i++) {
-                array[i] =new Random().nextInt(number);
+                array[i] = new Random().nextInt(number);
             }
         }
     }
@@ -42,8 +42,8 @@ public class LinearSearch {
 
     public void search(int x) {
         int k = 0;
-        for (int i = 0; i < this.array.length; i++) {
-            if (this.array[i] == x) {
+        for (int i : array) {
+            if (array[i] == x) {
                 System.out.println("Found " + x + " at index: " + i);
                 k++;
             }

@@ -14,7 +14,7 @@ public class AllWeekController {
     Validation validation = new Validation();
     Week_1_Controller week1 = new Week_1_Controller();
     Week2_controller week2 = new Week2_controller();
-    
+    Week3_controller week3 = new Week3_controller();
     public void menu() {
         String[] menu = new String[]{
             "Week 1",
@@ -39,6 +39,7 @@ public class AllWeekController {
                     break;
                 }
                 case 3:{
+                    week3.menu();
                     break;
                 }
                 case 4:{

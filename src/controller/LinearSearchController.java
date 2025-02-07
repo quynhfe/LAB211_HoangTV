@@ -17,6 +17,7 @@ public class LinearSearchController {
     Validation validation = new Validation();
 
     public void display() {
+        //ivrit
         System.out.println(validation.MAUXANHBIEN + "  _     _                                                 _     \n"
                 + validation.MAUXANHBIEN + " | |   (_)_ __   ___  __ _ _ __   ___  ___  __ _ _ __ ___| |__  \n"
                 + validation.MAUXANHBIEN + " | |   | | '_ \\ / _ \\/ _` | '__| / __|/ _ \\/ _` | '__/ __| '_ \\ \n"

@@ -27,7 +27,6 @@ public class LetterAndCharacterCount {
     
     public Map<String, Integer> countLetter() {
         Map<String, Integer> letterMap = new HashMap<>();
-        input.trim();
         String[] words = input.split("\\s+"); 
         for (String word : words) {
             letterMap.put(word, letterMap.getOrDefault(word, 0) + 1);
@@ -37,10 +36,8 @@ public class LetterAndCharacterCount {
 
      public Map<Character, Integer> countCharacter() {
         Map<Character, Integer> characterMap = new HashMap<>();
-        input.trim();
         for (char currentChar : input.toCharArray()) {
             if(!Character.isWhitespace(currentChar))
-                
             characterMap.put(currentChar, characterMap.getOrDefault(currentChar, 0) + 1);
         }
         return characterMap;
