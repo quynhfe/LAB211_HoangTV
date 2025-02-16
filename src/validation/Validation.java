@@ -4,6 +4,10 @@
  */
 package validation;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -27,6 +31,62 @@ public class Validation {
     public final String MAUTIMTHAN = "\033[36m";
     public final String MAUXAM = "\\033[90m";
     public final String MAUHONG = "\033[35m";
+
+    public String getOutputStringInputMatchRegex(String msg, String regex, String error) {
+        String input;
+        while (true) {
+            System.out.println(msg);
+            input = sc.nextLine().trim();
+            if (input.matches(regex)) {
+                return input.trim();
+            } else {
+                System.err.println(error);
+            }
+        }
+    }
+
+    public int getOutputIntInputMatchRegex(String msg, String regex, String error) {
+        String input;
+        while (true) {
+            System.out.print(msg + " "); 
+            input = sc.nextLine().trim();
+            if (!input.matches(regex)) {
+                System.err.println(error);
+                continue;
+            }
+            try {
+                int value = Integer.parseInt(input);
+                if (value < Integer.MAX_VALUE) {
+                    return value;
+                } else {
+                    System.err.println("Enter number < " + Integer.MAX_VALUE);
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid integer.");
+            }
+        }
+    }
+
+    public double getOutputDoubleInputMatchRegex(String msg, String regex, String error) {
+        String input;
+        while (true) {
+            System.out.print(msg + " ");
+            input = sc.nextLine().trim();
+            if (!input.matches(regex)) {
+                System.err.println(error);
+                continue;
+            }
+            try {
+                double value = Double.parseDouble(input);
+                if (Double.isNaN(value) || Double.isInfinite(value)|| value > Double.MAX_VALUE) {
+                    throw new NumberFormatException();
+                }
+                return value;
+            } catch (NumberFormatException e) {
+                System.err.println(error);
+            }
+        }
+    }
 
     // MENU MENU MENU MENU MENU MENU MENU 
     public void inMang(String[] options, String msg) {
@@ -69,59 +129,33 @@ public class Validation {
     }
 
     //INT INT INT INT INT INT INT INT INT 
-    public boolean checkIntLimit(String input, int a, int b) {
-        if (!INT_PATTERN.matcher(input).matches()) {
-            System.err.println("Input must be a valid integer.");
-            return false;
-        }
-        int num = Integer.parseInt(input);
-        if (num >= a && num <= b) {
-            System.out.println("");
-            return true;
-        } else {
-            System.err.println("Input must be between " + a + " and " + b + ".");
-            return false;
-        }
-    }
-
     public int getIntLimit(String msg, int a, int b) {
         while (true) {
-            System.out.print(msg);
-            String input = sc.nextLine();
-            if (checkIntLimit(input, a, b)) {
-                return Integer.parseInt(input);
+            int input = getValidInt(msg);
+            if (input >= a && input <= b) {
+                return input;
+            }
+            else{
+                System.out.println("Enter integer in range [ " +a+";"+b+" ]");
             }
         }
     }
 
     public int getValidPositiveInt(String msg) {
-        String input;
-        while (true) {
-            System.out.println(msg);
-            input = sc.nextLine();
-            if (input != null && !input.trim().isEmpty() && input.matches("\\d+")) {
-                return Integer.parseInt(input);
-            } else {
-                System.err.println("Please enter an integer.");
-            }
-        }
+        return getOutputIntInputMatchRegex(msg, "^[1-9]\\d*$", "Please enter an integer > 0.");
     }
 
     public int getValidInt(String msg) {
-        String input;
-        while (true) {
-            System.out.println(msg);
-            input = sc.nextLine();
-            if (input != null && !input.trim().isEmpty() && input.matches("^[+-]?\\d+$")) {
-                return Integer.parseInt(input);
-            } else {
-                System.err.println("Please enter an integer.");
-            }
-        }
+        return getOutputIntInputMatchRegex(msg, "-?\\d+", "Please enter an integer.");
     }
 
     //STRING STRING STRING STRING STRING STRING
     //STRING STRING STRING STRING STRING STRING
+    public String getStringFromArray(String arr[], String msg) {
+        int i = getChoice(arr, msg);
+        return arr[i];
+    }
+
     public boolean isValidString(String str) {
         str = str.trim();
         if (str.isEmpty() || str.equals(" ") || str.equals("\n")) {
@@ -131,113 +165,60 @@ public class Validation {
     }
 
     public String getValidString(String msg) {
-        String input;
+        return getOutputStringInputMatchRegex(msg, "^(?=.*[A-Za-z])[A-Za-z ]+$", "Please enter a string.");
+    }
+
+    public String getValidStringNoMoreThanNCharacter(String msg, int length) {
         while (true) {
-            System.out.println(msg);
-            input = sc.nextLine();
-            if (isValidString(input)) {
-                return input.trim();
+            String string = getValidString(msg);
+            if (string.length() < length) {
+                return string;
             } else {
-                System.err.println("Please enter a string.");
+                System.err.println("Please enter a string no more than " + length + " characters");
             }
         }
     }
 
+    public String getValidPhonenumberHaveNDigit(String msg, int numberDigit, String error) {
+        return getOutputStringInputMatchRegex(msg, "^\\d{" + numberDigit + "}$", error);
+    }
     /////////// Check Binary, Decimal, Hex ///////////
     public String getValidBinary(String msg) {
-        String input;
-        while (true) {
-            System.out.println(msg);
-            input = sc.nextLine();
-            if (input.matches("[01]+")) {
-                return input.trim();
-            } else {
-                System.err.println("Please enter a Binary number.");
-            }
-        }
+        return getOutputStringInputMatchRegex(msg, "[01]+", "Please enter a Binary number.");
     }
 
     public String getValidDecimal(String msg) {
-        String input;
-        while (true) {
-            System.out.println(msg);
-            input = sc.nextLine();
-            if (input.matches("\\d+")) {
-                return input.trim();
-            } else {
-                System.err.println("Please enter a Decimal number.");
-            }
-        }
+        return getOutputStringInputMatchRegex(msg, "\\d+", "Please enter a Decimal number.");
+
     }
 
     public String getValidHexadecimal(String msg) {
-        String input;
-        while (true) {
-            System.out.println(msg);
-            input = sc.nextLine();
-            if (input.matches("[0-9A-Fa-f]+")) {
-                return input.trim();
-            } else {
-                System.err.println("Please enter a Hexadecimal number.");
-            }
-        }
-    }
-
-    ////FLOAT FLOAT FLOAT FLOAT FLOAT ////////////
-    public boolean isValidFloat(String input) {
-        try {
-            Float.parseFloat(input);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    public float getValidFloat(String msg) {
-        String input;
-        while (true) {
-            System.out.println(msg);
-            input = sc.nextLine();
-            if (isValidFloat(input)) {
-                return Float.parseFloat(input);
-            } else {
-                System.out.println(MAUDO + "Please enter a real number.");
-            }
-        }
+        return getOutputStringInputMatchRegex(msg, "[0-9A-Fa-f]+", "Please enter a Hexadecimal number.");
     }
 
     /// DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE//////
-    public boolean isValidDouble(String input) {
-        try {
-            Double.parseDouble(input);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
     public double getValidDouble(String msg) {
-        String input;
-        while (true) {
-            System.out.println(msg);
-            input = sc.nextLine();
-            if (isValidDouble(input)) {
-                return Double.parseDouble(input);
-            } else {
-                System.out.println(MAUDO + "Please enter a real number.");
-            }
-        }
+        return getOutputDoubleInputMatchRegex(msg, "^[+-]?\\d+(\\.\\d+)?$", "Please enter a valid real number.");
     }
 
     public double getValidDoubleGreaterThan(String msg, double numberGreaterThan) {
-        String input;
         while (true) {
-            System.out.println(msg);
-            input = sc.nextLine();
-            if (isValidDouble(input) && (Double.parseDouble(input) > numberGreaterThan)) {
-                return Double.parseDouble(input);
+            double a = getValidDouble(msg);
+            if (a >= numberGreaterThan ) {
+                return a;
             } else {
-                System.out.println(MAUDO + "Please enter a real number > " + numberGreaterThan);
+                System.err.println("Please enter a real number >= " + numberGreaterThan);
+            }
+        }
+    }
+    
+    public double getValidDoubleLimit(String msg, double numberGreaterThan, double numberLeftThan) {
+        while (true) {
+            double a = getValidDouble(msg);
+            if (a >= numberGreaterThan && a <=  numberLeftThan ) {
+                return a;
+            } else {
+                System.out.println(MAUDO + "Please enter a real number int limit: [ " + numberGreaterThan +" ; " + numberLeftThan + "]");
             }
         }
     }
@@ -279,25 +260,53 @@ public class Validation {
     }
 
     ///////Shape shape shape shape ///////
-    public boolean isValidRadius(String input) {
-        return isValidDouble(input) && (Double.parseDouble(input) > 0);
-    }
-
-    public double getValidRadius(String msg) {
-        String input;
-        while (true) {
-            System.out.println(msg);
-            input = sc.nextLine();
-            if (isValidRadius(input)) {
-                return Double.parseDouble(input);
-            } else {
-                System.err.println("Please input a real number > 0");
-            }
-        }
-    }
-
     public boolean isValidSideTriangle(Double a, Double b, Double c) {
         return a + b > c && a + c > b && b + c > a;
     }
 
+    public int getValidNumberHaveNDigit(String msg, int numberDigit, String error) {
+        return getOutputIntInputMatchRegex(msg, "^\\d{" + numberDigit + "}$", error);
+    }
+    /////Date Date Date Date Date Date Date Date Date Date Date 
+
+    public Date getValidDate(String msg) throws ParseException {
+        String input;
+        while (true) {
+            System.out.println(msg);
+            input = sc.nextLine();
+            if (input.matches("\\d{2}/\\d{2}/\\d{4}")) {
+                return new SimpleDateFormat("dd/MM/yyyy").parse(input);
+            } else {
+                System.err.println("Please enter a date (dd/MM/yyyy):");
+            }
+        }
+    }
+
+    public Date getDateBeforeNow(String msg) throws ParseException {
+        while (true) {
+            Date date = getValidDate(msg);
+            if (date.before(new Date())) {
+                return date;
+            } else {
+                System.err.println("Please enter a date before current day");
+            }
+        }
+    }
+
+    public int getYearBeforeNow(String msg) {
+        while (true) {
+            int year = getValidInt(msg);
+            if (0< year && year < Calendar.getInstance().get(Calendar.YEAR)) {
+                return year;
+            } else {
+                System.err.println("Please enter a  before  year");
+            }
+        }
+    }
+    
+    public int calcutelateAge(int yob){
+        return Calendar.getInstance().get(Calendar.YEAR) - yob;
+    }
+
+    
 }

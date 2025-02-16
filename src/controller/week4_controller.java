@@ -5,53 +5,46 @@
 package controller;
 
 import validation.Validation;
+import week4.StudentManagement.StudentManagement;
+import week4.StudentTeacher.InformationManagement;
 
 /**
  *
- * @author bong
+ * @author ADMIN
  */
-public class AllWeekController {
+public class week4_controller {
+
+    StudentManagement studentManagement = new StudentManagement();
+    InformationManagement informationManagement = new InformationManagement();
     Validation validation = new Validation();
-    Week_1_Controller week1 = new Week_1_Controller();
-    Week2_controller week2 = new Week2_controller();
-    Week3_controller week3 = new Week3_controller();
-    week4_controller week4 = new week4_controller();
+
     public void menu() {
+        //alligator2, text to ascii web thu 2
+        System.out.println(validation.MAUHONG + " WEEK 4 "+ validation.RESET);
+
         String[] menu = new String[]{
-            "Week 1",
-            "Week 2",
-            "Week 3",
-            "Week 4",
-            "Week 5",
-            "Week 6",
+            "Student Management",
+            "Input and display student and teacher information",
             "Return main menu"
         };
         int len = menu.length;
         int choice;
         do {
-            choice = validation.getChoice(menu, "CHOOSE A WEEK");
+            choice = validation.getChoice(menu, "WEEK 1");
             switch (choice) {
                 case 1: {
-                    week1.menu();
+                    studentManagement.display();
                     break;
                 }
-                case 2:{
-                    week2.menu();
+                case 2: {
+                    informationManagement.display();
                     break;
                 }
-                case 3:{
-                    week3.menu();
-                    break;
-                }
-                case 4:{
-                    week4.menu();
-                    break;
-                }
-                case 5:{
+                case 5: {
                     System.out.println("Return main menu\n");
                     break;
                 }
-                default:{
+                default: {
                     break;
                 }
             }

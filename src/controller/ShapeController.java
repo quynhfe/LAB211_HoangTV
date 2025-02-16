@@ -30,7 +30,7 @@ public class ShapeController {
         double width = validation.getValidDoubleGreaterThan("Please input side width of Rectangle: ", 0);
         double length = validation.getValidDoubleGreaterThan("Please input length of Rectangle: ", 0);
         Shape rectangle = new Rectangle(width, length);
-        double radius = validation.getValidRadius("Please input radius of Circle: ");
+        double radius = validation.getValidDoubleGreaterThan("Please input radius of Circle: ",0);
         Shape circle = new Circle(radius);
         double a, b, c;
 
