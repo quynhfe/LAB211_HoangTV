@@ -6,7 +6,6 @@ package week_5;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import validation.Validation;
 
 /**
@@ -71,70 +70,93 @@ public class CourseManagement {
     }
 
     public void updateOnlineCourse(OnlineCourse course) {
-        String platform, instructors, note;
+        String[] menu = new String[]{
+            "Name",
+            "Creadit",
+            "Platform",
+            "Instructors",
+            "Note",
+            "Exit"
+        };
+        int len = menu.length;
+        int choice;
         do {
-            platform = v.getValidStringCanHaveEnter("Platform");
-            if (platform.trim().isEmpty()) {
-                break;
+            choice = v.getChoice(menu, "Information Management");
+            switch (choice) {
+                case 1: {
+                    do {
+                        course.setName(v.getValidString("Enter name"));
+                    } while (isNameExisted(courseList, course.getName()));
+                    break;
+                }
+                case 2: {
+                    course.setCredit(v.getIntLimit("Enter credit", 1, Integer.MAX_VALUE));
+                    break;
+                }
+                case 3: {
+                    course.setPlatform(v.getValidString("Enter platform"));
+                    break;
+                }
+                case 4: {
+                    course.setInstructors(v.getValidString("Enter instructors"));
+                    break;
+                }
+                case 5: {
+                    course.setNote(v.getValidString("Enter note"));
+                    break;
+                }
             }
-            course.setPlatform(platform);
-            break;
-        } while (true);
-        do {
-            instructors = v.getValidStringCanHaveEnter("Instructors");
-            if (instructors.trim().isEmpty()) {
-                break;
-            }
-            course.setInstructors(instructors);
-            break;
-        } while (true);
-        do {
-            note = v.getValidStringCanHaveEnter("Note");
-            if (note.trim().isEmpty()) {
-                break;
-            }
-            course.setNote(note);
-            break;
-        } while (true);
+
+        } while (choice > 0 && choice < len);
     }
 
     public void updateOfflineCourse(OfflineCourse course) throws ParseException {
-        String teacherName, campus;
-        Date begin, end;
+
+        String[] menu = new String[]{
+            "Name",
+            "Creadit",
+            "Teacher name",
+            "Campus",
+            "Date begin",
+            "Date end",
+            "Exit"
+        };
+        int len = menu.length;
+        int choice;
         do {
-            teacherName = v.getValidStringCanHaveEnter("Teacher");
-            if (teacherName.trim().isEmpty()) {
-                break;
+            choice = v.getChoice(menu, "Information Management");
+            switch (choice) {
+                case 1: {
+                    do {
+                        course.setName(v.getValidString("Enter name"));
+                    } while (isNameExisted(courseList, course.getName()));
+                    break;
+                }
+                case 3: {
+                    course.setTecherName(v.getValidString("Enter teacher name"));
+                    break;
+                }
+                case 2: {
+                    course.setCredit(v.getIntLimit("Enter credit", 1, Integer.MAX_VALUE));
+                    break;
+                }
+                case 4: {
+                    course.setCampus(v.getValidString("Enter campus"));
+                    break;
+                }
+                case 5: {
+                    course.setBegin(v.getDateBeforeNow("Date begin"));
+                    break;
+                }
+                case 6: {
+                    do {
+                        course.setEnd(v.getValidDate("Date end"));
+                    } while (course.getEnd().before(course.getBegin()));
+                    break;
+                }
             }
-            course.setTecherName(teacherName);
-            break;
-        } while (true);
-        do {
-            campus = v.getValidStringCanHaveEnter("Campus");
-            if (campus.trim().isEmpty()) {
-                break;
-            }
-            course.setCampus(campus);
-            break;
-        } while (true);
-        do {
-            begin = v.getValidDateOrNull("Date begin");
-            if (campus.trim().isEmpty()) {
-                break;
-            }
-            course.setBegin(begin);
-            break;
-        } while (true);
-        do {
-            end = v.getValidDateOrNull("Date end");
-            if (campus.trim().isEmpty()) {
-                break;
-            }
-            if (end.after(course.getBegin())) {
-                course.setBegin(begin);
-                break;
-            }
-        } while (true);
+
+        } while (choice > 0 && choice < len);
     }
 
     public void update() throws ParseException {
@@ -147,30 +169,12 @@ public class CourseManagement {
             if (c != null) {
                 System.out.println(c.toString());
             } else {
-                String choice = v.getYesNo("No data found, do you want to find again? (Y/N):");
+                String choice = v.getOption("No data found, do you want to find again? (Y/N):", new String[]{"Y", "N"});
                 if (choice.equalsIgnoreCase("N")) {
                     return;
                 }
             }
         } while (c == null);
-        String name;
-        do {
-            name = v.getInput("Course Name or Enter empty if you don't want to change it.");
-            if (name.isEmpty()) {
-                break;
-            }
-            if (!name.equalsIgnoreCase(c.getName())) {
-                c.setName(name);
-                break;
-            } else {
-                System.out.println("Course name is existed");
-            }
-        } while (true);
-
-        int credit = Integer.parseInt(v.getInput("Credit or Enter empty if you don't want to change it."));
-        if (credit != -1) {
-            c.setCredit(credit);
-        }
         if (c instanceof OnlineCourse) {
             OnlineCourse online = (OnlineCourse) c;
             updateOnlineCourse(online);
@@ -204,7 +208,9 @@ public class CourseManagement {
             o.setTecherName(v.getValidString("Enter teacher name"));
             o.setCampus(v.getValidString("Enter campus"));
             o.setBegin(v.getDateBeforeNow("Date begin"));
-            o.setEnd(v.getDateAfterAnotherDate("Date end", o.getBegin()));
+            do {
+                o.setEnd(v.getValidDate("Date end"));
+            } while (o.getEnd().before(o.getBegin()));
         }
         courseList.add(course);
     }

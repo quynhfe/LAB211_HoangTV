@@ -46,24 +46,25 @@ public class BigNumberOperations {
             return "0";
         }
         int len1 = num1.length(), len2 = num2.length();
-        StringBuilder result1 = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         int sodu = 0;
+        String kq = "";
         for (int i = len1 - 1; i >= 0; i--) {
             int digit1 = num1.charAt(i) - '0';
             for (int j = len2 - 1; j >= 0; j--) {
                 int digit2 = num2.charAt(j) - '0';
-                int multi = digit1 * digit2 +sodu;
-                
-                result1.append(multi%10);
-                sodu = multi/10;
-            }
-            String kq;
-//            StringBuilder result2 = new StringBuilder();
+                int multi = digit1 * digit2 + sodu;
 
+                result.append(multi % 10);
+                sodu = multi / 10;
+            }
             
+            String k = "";
+            kq = add(kq, result + k);
+            k += "0";
         }
 
-        return "";
+        return kq;
     }
 
     public static void main(String[] args) {

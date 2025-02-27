@@ -6,6 +6,9 @@ package validation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
@@ -48,7 +51,7 @@ public class Validation {
     public int getOutputIntInputMatchRegex(String msg, String regex, String error) {
         String input;
         while (true) {
-            System.out.print(msg + " "); 
+            System.out.print(msg + " ");
             input = sc.nextLine().trim();
             if (!input.matches(regex)) {
                 System.err.println(error);
@@ -78,7 +81,7 @@ public class Validation {
             }
             try {
                 double value = Double.parseDouble(input);
-                if (Double.isNaN(value) || Double.isInfinite(value)|| value > Double.MAX_VALUE) {
+                if (Double.isNaN(value) || Double.isInfinite(value) || value > Double.MAX_VALUE) {
                     throw new NumberFormatException();
                 }
                 return value;
@@ -134,9 +137,8 @@ public class Validation {
             int input = getValidInt(msg);
             if (input >= a && input <= b) {
                 return input;
-            }
-            else{
-                System.out.println("Enter integer in range [ " +a+";"+b+" ]");
+            } else {
+                System.out.println("Enter integer in range [ " + a + ";" + b + " ]");
             }
         }
     }
@@ -168,6 +170,14 @@ public class Validation {
         return getOutputStringInputMatchRegex(msg, "^(?=.*[A-Za-z])[A-Za-z ]+$", "Please enter a string.");
     }
 
+    public  String getValidStringHaveNumber(String msg) {
+        return getOutputStringInputMatchRegex(msg, "^(?=.*[A-Za-z0-9])[A-Za-z0-9 ]+$", "Please enter a valid string.");
+    }
+    
+    public  String getValidStringCanHaveEnter(String msg) {
+        return getOutputStringInputMatchRegex(msg, "^(?=.*[A-Za-z])[A-Za-z \n]+$", "Please enter a valid string.");
+    }
+    
     public String getValidStringNoMoreThanNCharacter(String msg, int length) {
         while (true) {
             String string = getValidString(msg);
@@ -179,9 +189,14 @@ public class Validation {
         }
     }
 
-    public String getValidPhonenumberHaveNDigit(String msg, int numberDigit, String error) {
+    public String getValidStringHaveNDigit(String msg, int numberDigit, String error) {
         return getOutputStringInputMatchRegex(msg, "^\\d{" + numberDigit + "}$", error);
     }
+
+    public String getValidStringHaveStartStringThenNDigit(String msg, String start, int numberDigit, String error) {
+        return getOutputStringInputMatchRegex(msg, "^" + start + "\\d{" + numberDigit + "}$", error);
+    }
+
     /////////// Check Binary, Decimal, Hex ///////////
     public String getValidBinary(String msg) {
         return getOutputStringInputMatchRegex(msg, "[01]+", "Please enter a Binary number.");
@@ -204,21 +219,21 @@ public class Validation {
     public double getValidDoubleGreaterThan(String msg, double numberGreaterThan) {
         while (true) {
             double a = getValidDouble(msg);
-            if (a >= numberGreaterThan ) {
+            if (a >= numberGreaterThan) {
                 return a;
             } else {
                 System.err.println("Please enter a real number >= " + numberGreaterThan);
             }
         }
     }
-    
+
     public double getValidDoubleLimit(String msg, double numberGreaterThan, double numberLeftThan) {
         while (true) {
             double a = getValidDouble(msg);
-            if (a >= numberGreaterThan && a <=  numberLeftThan ) {
+            if (a >= numberGreaterThan && a <= numberLeftThan) {
                 return a;
             } else {
-                System.out.println(MAUDO + "Please enter a real number int limit: [ " + numberGreaterThan +" ; " + numberLeftThan + "]");
+                System.out.println(MAUDO + "Please enter a real number int limit: [ " + numberGreaterThan + " ; " + numberLeftThan + "]");
             }
         }
     }
@@ -269,6 +284,24 @@ public class Validation {
     }
     /////Date Date Date Date Date Date Date Date Date Date Date 
 
+    public LocalDateTime getValidLocalDateTime(String msg) throws ParseException {
+        String input;
+        while (true) {
+            try {
+                System.out.print(msg + " (dd/MM/yyyy HH:mm): ");
+                input = sc.nextLine().trim();
+                if (!input.matches("\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}")) {
+                    throw new DateTimeParseException("Invalid format!", input, 0);
+                }
+
+                LocalDateTime dateTime = LocalDateTime.parse(input, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+                return dateTime;
+            } catch (DateTimeParseException e) {
+                System.err.println("Invalid date-time format or incorrect hour/minute (00-23:00-59). Please try again.");
+            }
+        }
+    }
+
     public Date getValidDate(String msg) throws ParseException {
         String input;
         while (true) {
@@ -296,17 +329,29 @@ public class Validation {
     public int getYearBeforeNow(String msg) {
         while (true) {
             int year = getValidInt(msg);
-            if (0< year && year < Calendar.getInstance().get(Calendar.YEAR)) {
+            if (0 < year && year < Calendar.getInstance().get(Calendar.YEAR)) {
                 return year;
             } else {
                 System.err.println("Please enter a  before  year");
             }
         }
     }
-    
-    public int calcutelateAge(int yob){
+
+    public int calcutelateAge(int yob) {
         return Calendar.getInstance().get(Calendar.YEAR) - yob;
     }
 
-    
+    public String getOption(String msg, String[] option) {
+        String input;
+        while (true) {
+            System.out.println(msg);
+            input = sc.nextLine();
+            for (String o : option) {
+                if (o.equalsIgnoreCase(input)) {
+                    return input;
+                }
+            }
+            System.out.println("Invalid input");
+        }
+    }
 }

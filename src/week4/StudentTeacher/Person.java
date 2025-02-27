@@ -86,7 +86,7 @@ public abstract class Person {
     public void inputAll() {
         this.id = v.getValidNumberHaveNDigit("Enter id:", 6, "Please enter number 6 digits.");
         this.name = v.getValidString("Enter name:");
-        this.phone = v.getValidPhonenumberHaveNDigit("Enter phonenumber:", 12, "Enter Phone number is 12 digits");
+        this.phone = v.getValidStringHaveNDigit("Enter phonenumber:", 12, "Enter Phone number is 12 digits");
         this.yob = v.getYearBeforeNow("Enter year of birth:");
         this.major = v.getValidStringNoMoreThanNCharacter("Enter major:", 30);
     }
