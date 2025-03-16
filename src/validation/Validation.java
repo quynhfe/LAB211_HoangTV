@@ -38,7 +38,7 @@ public class Validation {
     public String getOutputStringInputMatchRegex(String msg, String regex, String error) {
         String input;
         while (true) {
-            System.out.println(msg);
+            System.out.print(msg + ": ");
             input = sc.nextLine().trim();
             if (input.matches(regex)) {
                 return input.trim();
@@ -51,7 +51,7 @@ public class Validation {
     public int getOutputIntInputMatchRegex(String msg, String regex, String error) {
         String input;
         while (true) {
-            System.out.print(msg + " ");
+            System.out.print(msg + ": ");
             input = sc.nextLine().trim();
             if (!input.matches(regex)) {
                 System.err.println(error);
@@ -73,7 +73,7 @@ public class Validation {
     public double getOutputDoubleInputMatchRegex(String msg, String regex, String error) {
         String input;
         while (true) {
-            System.out.print(msg + " ");
+            System.out.print(msg + ": ");
             input = sc.nextLine().trim();
             if (!input.matches(regex)) {
                 System.err.println(error);
@@ -103,7 +103,7 @@ public class Validation {
 
     public int getChoice(String[] options, String msg) {
         inMang(options, msg);
-        return getIntLimit("Your choice: ", 1, options.length);
+        return getIntLimit("Your choice", 1, options.length);
     }
 
     public void printChoice(String[] options, int choice) {
@@ -181,7 +181,7 @@ public class Validation {
     public String getValidStringNoMoreThanNCharacter(String msg, int length) {
         while (true) {
             String string = getValidString(msg);
-            if (string.length() < length) {
+            if (string.length() <= length) {
                 return string;
             } else {
                 System.err.println("Please enter a string no more than " + length + " characters");
@@ -219,7 +219,7 @@ public class Validation {
     public double getValidDoubleGreaterThan(String msg, double numberGreaterThan) {
         while (true) {
             double a = getValidDouble(msg);
-            if (a >= numberGreaterThan) {
+            if (a > numberGreaterThan) {
                 return a;
             } else {
                 System.err.println("Please enter a real number >= " + numberGreaterThan);
@@ -230,7 +230,7 @@ public class Validation {
     public double getValidDoubleLimit(String msg, double numberGreaterThan, double numberLeftThan) {
         while (true) {
             double a = getValidDouble(msg);
-            if (a >= numberGreaterThan && a <= numberLeftThan) {
+            if (a > numberGreaterThan && a < numberLeftThan) {
                 return a;
             } else {
                 System.out.println(MAUDO + "Please enter a real number int limit: [ " + numberGreaterThan + " ; " + numberLeftThan + "]");
