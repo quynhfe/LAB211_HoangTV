@@ -170,14 +170,14 @@ public class Validation {
         return getOutputStringInputMatchRegex(msg, "^(?=.*[A-Za-z])[A-Za-z ]+$", "Please enter a string.");
     }
 
-    public  String getValidStringHaveNumber(String msg) {
+    public String getValidStringHaveNumber(String msg) {
         return getOutputStringInputMatchRegex(msg, "^(?=.*[A-Za-z0-9])[A-Za-z0-9 ]+$", "Please enter a valid string.");
     }
-    
-    public  String getValidStringCanHaveEnter(String msg) {
+
+    public String getValidStringCanHaveEnter(String msg) {
         return getOutputStringInputMatchRegex(msg, "^(?=.*[A-Za-z])[A-Za-z \n]+$", "Please enter a valid string.");
     }
-    
+
     public String getValidStringNoMoreThanNCharacter(String msg, int length) {
         while (true) {
             String string = getValidString(msg);
@@ -195,6 +195,10 @@ public class Validation {
 
     public String getValidStringHaveStartStringThenNDigit(String msg, String start, int numberDigit, String error) {
         return getOutputStringInputMatchRegex(msg, "^" + start + "\\d{" + numberDigit + "}$", error);
+    }
+
+    public String getValidPhoneNumber() {
+        return getOutputStringInputMatchRegex("Phone number", "^0[0-9]{9}(?:[0-9]{2})?$", "Phone number must start with 0 and have 10 or 12 numbers");
     }
 
     /////////// Check Binary, Decimal, Hex ///////////

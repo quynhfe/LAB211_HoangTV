@@ -74,6 +74,10 @@ public class Fruit {
         return id;
     }
 
+    public double getTotalBillPrice() {
+        return this.quantity * this.price;
+    }
+
     public boolean isDecreaseQuantity(int amount) {
         if (amount <= quantity) {
             this.quantity = quantity - amount;
@@ -84,6 +88,6 @@ public class Fruit {
 
     @Override
     public String toString() {
-        return String.format("%-5s %-20s %-20s %-20s %-20s\n", id, name, price, quantity, origin);
+        return String.format("%-5s %-20s %-20s %-20s\n", id, name, origin, price);
     }
 }

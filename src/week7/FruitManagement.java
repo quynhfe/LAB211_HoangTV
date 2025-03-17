@@ -19,6 +19,10 @@ public class FruitManagement {
     public FruitManagement() {
     }
 
+    public ArrayList<Fruit> getfList() {
+        return fList;
+    }
+
     public Fruit getFruitById(int id) {
         if (fList.isEmpty()) {
             return null;
@@ -38,6 +42,10 @@ public class FruitManagement {
         int quantity = v.getIntLimit("Fruit quantity", 0, 100000);
         String origin = v.getValidString("Fruit origin");
         fList.add(new Fruit(name, price, quantity, origin));
+    }
+    
+    public void checkQuantityAndUpdate(){
+         fList.removeIf(f -> f.getQuantity() == 0);
     }
 
     public void update() {
@@ -102,19 +110,21 @@ public class FruitManagement {
         fList.remove(f);
     }
 
-    public void display() {
-        if (fList.isEmpty()) {
+    public void display(ArrayList<Fruit> f) {
+        if (f.isEmpty()) {
             System.out.println("Fruit List is emty");
             return;
         } else {
             System.out.println("=========Fruit List========");
-            System.out.printf("%-5s %-20s %-20s %-20s %-20s", "ID", "Name", "Price", "Quantity", "Origin");
-            for (Fruit t : fList) {
+            System.out.printf("%-5s %-20s %-20s %-20s", "|++ Item ++", "|++ Fruit Name ++", "|++ Origin ++", "| ++ Price ++ |");
+            System.out.println("");
+            for (Fruit t : f) {
                 System.out.println(t.toString());
             }
         }
     }
-
+    
+    
     public void menu() {
         String[] menu = new String[]{
             "Add", "Update", "Delete", "Display all", "Exit"
@@ -137,7 +147,7 @@ public class FruitManagement {
                     break;
                 }
                 case 4: {
-                    display();
+                    display(fList);
                 }
                 default: {
                     break;
